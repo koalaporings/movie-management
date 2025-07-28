@@ -1,3 +1,9 @@
+<template>
+    <button :class="btnClass" @click="$emit('click')">
+        <slot>{{ label }}</slot>
+    </button>
+</template>
+
 <script>
 export default {
     name: "BaseButton",
@@ -20,12 +26,6 @@ export default {
 };
 </script>
 
-<template>
-    <button :class="btnClass" @click="$emit('click')">
-        <slot>{{ label }}</slot>
-    </button>
-</template>
-
 <style scoped>
 .btn {
     padding: 10px 20px;
@@ -36,7 +36,7 @@ export default {
     transition: background-color 0.3s ease;
 }
 
-/* Variants */
+/* Types */
 .btn-primary {
     background-color: #007bff;
     color: white;

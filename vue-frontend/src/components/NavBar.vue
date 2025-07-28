@@ -1,12 +1,3 @@
-<script>
-import BaseButton from './generics/BaseButton.vue';
-
-export default {
-    components: {
-        BaseButton
-    }
-};
-</script>
 <template>
     <div class="button-group">
         <BaseButton
@@ -23,6 +14,17 @@ export default {
         />
     </div>
 </template>
+
+<script>
+import BaseButton from './generics/BaseButton.vue';
+
+export default {
+    components: {
+        BaseButton
+    }
+};
+</script>
+
 <style scoped>
     .button-group {
         display: flex;

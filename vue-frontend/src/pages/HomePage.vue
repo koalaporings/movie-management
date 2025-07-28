@@ -1,3 +1,18 @@
+<template>
+    <div class="group">
+        <div class="header">
+            <NavBar/>
+        </div>
+        <div class="movie-carousel">
+            <MovieCarousel :movies="featuredMovies" />
+        </div>
+        <div class="movie-list">
+            <h2> Now Showing </h2>
+            <MovieList :movies="movieList" />
+        </div>
+    </div>
+</template>
+
 <script>
 import NavBar from "@/components/NavBar.vue";
 import MovieCarousel from "@/components/MovieCarousel.vue";
@@ -26,20 +41,7 @@ export default {
     },
 }
 </script>
-<template>
-    <div class="group">
-        <div class="header">
-            <NavBar/>
-        </div>
-        <div class="movie-carousel">
-            <MovieCarousel :movies="featuredMovies" />
-        </div>
-        <div class="movie-list">
-            <h2> Now Showing </h2>
-            <MovieList :movies="movieList" />
-        </div>
-    </div>
-</template>
+
 <style scoped>
     .group {
         height: 100%;
