@@ -13,9 +13,9 @@ export default {
     data() {
         return {
         featuredMovies: [
-            { id: 1, title: "Inception", poster: "https://via.placeholder.com/400x200?text=Inception" },
-            { id: 2, title: "Interstellar", poster: "https://via.placeholder.com/400x200?text=Interstellar" },
-            { id: 3, title: "Tenet", poster: "https://via.placeholder.com/400x200?text=Tenet" },
+            { id: 1, title: "Matrix", poster: "https://m.media-amazon.com/images/I/51oBxmV-dML._AC_.jpg" },
+            { id: 2, title: "Interstellar", poster: "https://m.media-amazon.com/images/I/91kFYg4fX3L._AC_SY679_.jpg" },
+            { id: 3, title: "Avengers: Endgame", poster: "https://m.media-amazon.com/images/I/71niXI3lxlL._AC_SY679_.jpg" },
         ],
         movieList: [
             { id: 4, title: "The Batman" },
@@ -61,8 +61,8 @@ export default {
     }
 
     .movie-carousel {
-        padding: 16px;
-        height: 50%;
+        padding: 60px;
+        height: auto;
         width: 100%;
         align-content: center;
         box-sizing: border-box;

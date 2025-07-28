@@ -38,7 +38,7 @@ export default {
 }
 .carousel img {
     max-width: 100%;
-    height: auto;
+    max-height: 500px;
 }
 .carousel-controls {
     display: flex;
