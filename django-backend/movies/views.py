@@ -1,12 +1,10 @@
 from rest_framework.decorators import api_view
-from django.http import JsonResponse
+from rest_framework import status
 from rest_framework.response import Response
-from django.views.decorators.csrf import csrf_exempt
-from .forms import MovieForm
+
 from .models import Movie
 from.serializers import MovieSerializer
 
-# Create your views here.
 @api_view(['GET'])
 def fetch_movies(request):
     pk = request.GET.get("pk")
@@ -23,48 +21,44 @@ def fetch_movies(request):
         return Response(serializer.data)
 
 
-@csrf_exempt
 @api_view(['POST'])
 def create_movie(request):
-    form = MovieForm(request.POST, request.FILES)
-    if form.is_valid():
-        movie = form.save()
-        serializer = MovieSerializer(movie)
-        return JsonResponse(serializer.data, status=201)
-    else:
-        return JsonResponse({"errors": form.errors}, status=400)
+    serializer = MovieSerializer(data=request.data)
+    if serializer.is_valid():
+        movie = serializer.save()
+        return Response(MovieSerializer(movie).data, status=status.HTTP_201_CREATED)
+    return Response({'errors': serializer.errors}, status=status.HTTP_400_BAD_REQUEST)
 
 
-@csrf_exempt
 @api_view(['PUT'])
 def update_movie(request):
     pk = request.GET.get("pk")
+    if not pk:
+        return Response({'error': 'No pk provided'}, status=status.HTTP_400_BAD_REQUEST)
+
     try:
         movie = Movie.objects.get(pk=pk)
     except Movie.DoesNotExist:
-        return JsonResponse({'error': 'Movie not found'}, status=404)
+        return Response({'error': 'Movie not found'}, status=status.HTTP_404_NOT_FOUND)
 
-    form = MovieForm(request.POST, request.FILES, instance=movie)
-    for field in list(form.fields):
-        if field not in request.POST and field not in request.FILES:
-            form.fields.pop(field)
-    if form.is_valid():
-        updated_movie = form.save()
-        serializer = MovieSerializer(updated_movie)
-        return JsonResponse(serializer.data, status=200)
-    else:
-        return JsonResponse({'errors': form.errors}, status=400)
+    serializer = MovieSerializer(movie, data=request.data, partial=True)
+    if serializer.is_valid():
+        updated_movie = serializer.save()
+        return Response(MovieSerializer(updated_movie).data, status=status.HTTP_200_OK)
+    return Response({'errors': serializer.errors}, status=status.HTTP_400_BAD_REQUEST)
 
 
-@csrf_exempt
 @api_view(['DELETE'])
 def delete_movie(request):
     pk = request.GET.get("pk")
-    if pk:
-        try:
-            movie = Movie.objects.get(pk=pk)
-            movie_deletion_message = f"{movie.title} has been deleted"
-            movie.delete()
-        except Movie.DoesNotExist:
-            return Response({"error": "Movie not found"}, status=404)
-        return JsonResponse({"response": movie_deletion_message})
+    if not pk:
+        return Response({"error": "No pk provided"}, status=status.HTTP_400_BAD_REQUEST)
+
+    try:
+        movie = Movie.objects.get(pk=pk)
+    except Movie.DoesNotExist:
+        return Response({"error": "Movie not found"}, status=status.HTTP_404_NOT_FOUND)
+
+    movie_title = movie.title
+    movie.delete()
+    return Response({"response": f"{movie_title} has been deleted"}, status=status.HTTP_200_OK)
