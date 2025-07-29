@@ -1,9 +1,10 @@
 <template>
     <div class="carousel">
-        <img :src="movies[currentIndex].poster" :alt="movies[currentIndex].title" />
+        <span>{{ movies[currentIndex].title }}</span>
         <div class="carousel-controls">
             <button @click="prev">◀</button>
-            <span>{{ movies[currentIndex].title }}</span>
+            <img :src="movies[currentIndex].poster" :alt="movies[currentIndex].title" />
+
             <button @click="next">▶</button>
         </div>
     </div>
@@ -35,10 +36,15 @@ export default {
 .carousel {
     text-align: center;
     margin: 20px auto;
+
+    span {
+        font-size: 32px;
+        font-weight: 900;
+    }
 }
 .carousel img {
-    max-width: 100%;
-    max-height: 500px;
+    width: 400px;
+    height: 600px;
 }
 .carousel-controls {
     display: flex;
@@ -46,6 +52,6 @@ export default {
     align-items: center;
     gap: 15px;
     margin-top: 10px;
-    color: black
+    color: white
 }
 </style>

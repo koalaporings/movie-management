@@ -47,15 +47,14 @@ export default {
     methods: {
         ...mapActions(useMovieStore, ['fetchMovies'])
     },
-    
+
 }
 </script>
 
 <style scoped>
     .group {
         display: flex;
-        flex-direction: column;
-        background-color: white;
+        flex-direction: row;
     }
 
     .movie-carousel {
@@ -70,7 +69,6 @@ export default {
         padding: 16px;
         height: auto;
         width: 100%;
-        justify-items: center;
         box-sizing: border-box;
     }
 </style>

@@ -3,7 +3,7 @@
         <h2>Video Player</h2>
 
         <video
-            v-if="movie.video_file"
+            v-if="movie?.video_file"
             width="960"
             height="400"
             controls
@@ -31,7 +31,8 @@ export default {
     },
 
     async created() {
-        this.movie = await this.getMovie(7);
+        const pk = this.$route.query.pk;
+        this.movie = await this.getMovie(pk);
     },
 
     methods: {

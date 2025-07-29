@@ -1,23 +1,32 @@
 <template>
-    <div class="form">
-        <form @submit.prevent="submitForm" enctype="multipart/form-data">
-            <div class="form-input">
-                <label for="title">Title:</label>
-                <input type="text" id="title" v-model="form.title" required />
-            </div>
-            <div class="form-input">
-                <label for="description">Description:</label>
-                <textarea id="description" v-model="form.description"></textarea>
-            </div>
-            <div class="form-input">
-                <label for="video">Video File:</label>
-                <input type="file" id="video" @change="handleFile" accept="video/*, .mkv" required />
-            </div>
+    <div class="upload">
+        <div class="upload-header">
+            <h2> Upload a Movie</h2>
+        </div>
+        <div class="form">
+            <form @submit.prevent="submitForm" enctype="multipart/form-data">
+                <div class="form-input">
+                    <label for="title">Title:</label>
+                    <br/>
+                    <input type="text" id="title" v-model="form.title" required />
+                </div>
+                <div class="form-input">
+                    <label for="description">Description:</label>
+                    <br/>
+                    <textarea id="description" v-model="form.description"></textarea>
+                </div>
+                <div class="form-input">
+                    <label for="video">Video File:</label>
+                    <br/>
+                    <input type="file" id="video" @change="handleFile" accept="video/*, .mkv" required />
+                </div>
+            </form>
             <BaseButton
+                class="form-submit"
                 label="Submit"
                 @click="uploadMovie"
             />
-        </form>
+        </div>
     </div>
 </template>
 <script>
@@ -54,20 +63,41 @@ export default {
             formData.append('title', this.form.title);
             formData.append('description', this.form.description);
             formData.append('video_file', this.form.video);
-            
+
             await this.createMovie(formData)
         }
     }
 }
 </script>
 <style scoped>
+    .upload {
+        margin-top: 60px;
+    }
+
+    .upload-header {
+        font-size: 24px;
+    }
+
     .form {
         display: flex;
-        margin-top: 60px;
-        justify-content: center;
+        flex-direction: column;
 
         .form-input {
             padding-top: 20px;
+
+            input {
+                width: 600px;
+            }
+
+            textarea {
+                width: 600px;
+                height: 100px;
+            }
+        }
+
+        .form-submit {
+            margin-top: 20px;
+            width: 100px;
         }
     }
 </style>

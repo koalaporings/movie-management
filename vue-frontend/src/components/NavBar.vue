@@ -1,17 +1,21 @@
 <template>
     <div class="button-group">
+        <img
+            width="50px"
+            height="50px"
+        >
         <BaseButton
-            type="primary"
+            type="secondary"
             label="Home"
             @click="$router.push('/home')"
         />
         <BaseButton
-            type="primary"
+            type="secondary"
             label="List"
             @click="$router.push('/upload')"
         />
         <BaseButton
-            type="primary"
+            type="secondary"
             label="About"
             @click="$router.push('/watch')"
         />
@@ -30,7 +34,12 @@ export default {
 
 <style scoped>
     .button-group {
+        left: 0;
         display: flex;
-        justify-content: space-evenly;
+
+        img {
+            margin-right: 4px;
+        }
+
     }
 </style>
