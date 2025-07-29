@@ -3,14 +3,17 @@
         <BaseButton
             type="primary"
             label="Home"
+            @click="$router.push('/home')"
         />
         <BaseButton
             type="primary"
             label="List"
+            @click="$router.push('/upload')"
         />
         <BaseButton
             type="primary"
             label="About"
+            @click="$router.push('/watch')"
         />
     </div>
 </template>

@@ -1,8 +1,5 @@
 <template>
     <div class="group">
-        <div class="header">
-            <NavBar/>
-        </div>
         <div class="movie-carousel">
             <MovieCarousel :movies="featuredMovies" />
         </div>
@@ -15,14 +12,12 @@
 <script>
 import { mapState, mapActions } from 'pinia';
 import { useMovieStore } from '@/stores/movies';
-import NavBar from "@/components/NavBar.vue";
 import MovieCarousel from "@/components/MovieCarousel.vue";
 import MovieList from "@/components/MovieList.vue";
 
 export default {
     name: "HomePage",
     components: {
-        NavBar,
         MovieCarousel,
         MovieList,
     },
@@ -61,17 +56,6 @@ export default {
         display: flex;
         flex-direction: column;
         background-color: white;
-    }
-
-    .header {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        z-index: 1000;
-        background-color: #111;
-        padding: 16px;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
     }
 
     .movie-carousel {

@@ -18,7 +18,9 @@ export const useMovieStore = defineStore('movie', {
 		},
 
 		async createMovie(formData) {
-			const response = await axios.post('create-movie/', formData);
+			const response = await axios.post('create-movie/', formData, {
+				headers: { 'Content-Type': 'multipart/form-data' },
+			});
 			await this.fetchMovies();
 			return response.data;
 		},
