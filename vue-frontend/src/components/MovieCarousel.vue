@@ -46,5 +46,6 @@ export default {
     align-items: center;
     gap: 15px;
     margin-top: 10px;
+    color: black
 }
 </style>

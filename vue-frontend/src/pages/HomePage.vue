@@ -7,13 +7,14 @@
             <MovieCarousel :movies="featuredMovies" />
         </div>
         <div class="movie-list">
-            <h2> Now Showing </h2>
-            <MovieList :movies="movieList" />
+            <MovieList :movies="movies" />
         </div>
     </div>
 </template>
 
 <script>
+import { mapState, mapActions } from 'pinia';
+import { useMovieStore } from '@/stores/movies';
 import NavBar from "@/components/NavBar.vue";
 import MovieCarousel from "@/components/MovieCarousel.vue";
 import MovieList from "@/components/MovieList.vue";
@@ -39,16 +40,27 @@ export default {
         ],
         };
     },
+
+    computed: {
+        ...mapState(useMovieStore, ['movies'])
+    },
+
+    mounted() {
+        this.fetchMovies()
+    },
+
+    methods: {
+        ...mapActions(useMovieStore, ['fetchMovies'])
+    },
+    
 }
 </script>
 
 <style scoped>
     .group {
-        height: 100%;
-        width: 100%;
         display: flex;
         flex-direction: column;
-        background-color: black;
+        background-color: white;
     }
 
     .header {
