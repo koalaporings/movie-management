@@ -1,15 +1,35 @@
 <template>
-    <div class="spinner-overlay">
+    <div :class="['spinner-overlay', { fullscreen: fullscreen }]">
         <div class="spinner"></div>
     </div>
 </template>
-
+<script>
+export default {
+    props: {
+        fullscreen: {
+            type: Boolean,
+            default: false
+        }
+    }
+};
+</script>
 <style scoped>
     .spinner-overlay {
         display: flex;
         justify-content: center;
         align-items: center;
         padding: 40px;
+    }
+
+    /* Fullscreen mode styles */
+    .spinner-overlay.fullscreen {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background-color: rgba(0, 0, 0, 0.5);
+        z-index: 9999;
     }
 
     .spinner {
@@ -27,3 +47,4 @@
         }
     }
 </style>
+

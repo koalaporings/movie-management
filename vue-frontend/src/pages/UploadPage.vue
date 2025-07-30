@@ -49,19 +49,25 @@
         :message="errorMessage"
         @close="resetErrorMessage"
     />
+    <LoadingSpinner
+        v-if="isSubmitting"
+        fullscreen
+    />
 </template>
 <script>
 import { mapActions } from 'pinia';
 import { useMovieStore } from '@/stores/movies';
 import BaseButton from '@/components/generics/BaseButton.vue';
 import BaseModal from '@/components/generics/BaseModal.vue';
+import LoadingSpinner from '@/components/generics/LoadingSpinner.vue';
 
 export default {
     name: "UploadPage",
 
     components: {
         BaseButton,
-        BaseModal
+        BaseModal,
+        LoadingSpinner
     },
 
     data() {

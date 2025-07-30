@@ -29,7 +29,6 @@
 </template>
 
 <script>
-
 import { mapActions } from 'pinia';
 import { useMovieStore } from '@/stores/movies';
 
