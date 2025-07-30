@@ -6,17 +6,21 @@
         <div class="form">
             <form @submit.prevent="submitForm" enctype="multipart/form-data">
                 <div class="form-input">
-                    <label for="title">Title:</label>
+                    <label for="title">Title</label>
                     <br/>
-                    <input type="text" id="title" v-model="form.title" required />
+                    <input
+                        v-model="form.title"
+                        type="text"
+                        id="title"
+                        required />
                 </div>
                 <div class="form-input">
-                    <label for="description">Description:</label>
+                    <label for="description">Description</label>
                     <br/>
                     <textarea id="description" v-model="form.description"></textarea>
                 </div>
                 <div class="form-input">
-                    <label for="video">Video File:</label>
+                    <label for="video">Video File</label>
                     <br/>
                     <input type="file" id="video" @change="handleFile" accept="video/*, .mkv" required />
                 </div>
@@ -71,6 +75,7 @@ export default {
 </script>
 <style scoped>
     .upload {
+        margin-left: 50px;
         margin-top: 60px;
     }
 
@@ -81,22 +86,27 @@ export default {
     .form {
         display: flex;
         flex-direction: column;
+        font-size: 20px;
 
         .form-input {
             padding-top: 20px;
 
             input {
-                width: 600px;
+                width: 400px;
+                height: 30px;
+                font-size: 16px;
             }
 
             textarea {
-                width: 600px;
-                height: 100px;
+                width: 1000px;
+                height: 250px;
+                font-size: 16px;
             }
         }
 
         .form-submit {
             margin-top: 20px;
+            margin-left: -2px;
             width: 100px;
         }
     }

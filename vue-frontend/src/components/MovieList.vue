@@ -71,7 +71,6 @@ export default {
     margin: 0 auto;
     padding: 0;
     list-style: none;
-    color: white;
 }
 
 .movie-list-header {
