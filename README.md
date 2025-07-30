@@ -12,11 +12,12 @@ This is a full-stack movie application built with Vue.js (frontend) and Django (
 - PostgreSQL
 
 ## Project Structure
-
+```
 project-root/
 ├── media # movie and thumbnail directory
 ├── vue-frontend/ # Vue.js frontend application
 └── django-backend/ # Django backend application
+```
 
 ## Setup Instructions
 #### 1. Clone the repository
