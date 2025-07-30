@@ -46,9 +46,29 @@ https://www.postgresql.org/download/
 
 1.  During PostgreSQL installation, create a user and set a password.
 
-2.  Open `django-backend/mysite/settings.py`.
+2.  Open the psql CLI included in the installation.
 
-3.  Update the `DATABASES` section with your PostgreSQL username, password, and database name.
+3.  Press ENTER until you reach the password section.
+
+4.  After giving your password and pressing ENTER, write this command in the CLI.
+
+    `CREATE DATABASE movie_management`
+
+5.  Open `django-backend/mysite/settings.py`.
+
+
+6.  Update the `DATABASES` section with your PostgreSQL username, password, and database name.
+Example:
+```
+'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'movie_management',
+        'USER': 'postgres',
+        'PASSWORD': '123',
+        'HOST': 'localhost',
+        'PORT': '5432'
+    }
+```
 
 ### 6. Apply Migrations
 ```
@@ -80,3 +100,9 @@ python manage.py runserver
 1. Implement a celery task to convert any movie/video file into the .mp4 format after creating/uploading. The uploaded movie will not be seen in the movie list until the conversion is completed, to ensure better playback and audio.
 
 2. Implement thumbnail generation for the video player to preview a scene in the selected movie.
+
+## Testing Instructions
+
+#### File Upload
+    1. Login using a registered user.
+    2. 
