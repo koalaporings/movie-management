@@ -136,3 +136,9 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # Media files (Uploaded files like FileField, ImageField)
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
+
+# Pagination Settings
+REST_FRAMEWORK = {
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
+    'PAGE_SIZE': 10  # default items per page
+}

@@ -2,14 +2,16 @@ import { defineStore } from 'pinia';
 import axios from 'axios';
 
 export const useMovieStore = defineStore('movie', {
-	state: () => ({
-		movies: []
-	}),
-
 	actions: {
-		async fetchMovies() {
-			const response = await axios.get('movie-list/');
-			this.movies = response.data;
+		async fetchMovies(limit=10, offset=0) {
+            if (offset > 0){
+                const response = await axios.get('movie-list/', {params: {limit: limit, offset: offset}});
+			    return response.data;
+            } else {
+                const response = await axios.get('movie-list/');
+			    return response.data;
+            }
+
 		},
 
 		async getMovie(pk) {
@@ -30,7 +32,7 @@ export const useMovieStore = defineStore('movie', {
 			await this.fetchMovies();
 			return response.data;
 		},
-		
+
 		async deleteMovie(pk) {
 			const response = await axios.delete('delete-movie/', { params: { pk } });
 			await this.fetchMovies();

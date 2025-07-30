@@ -2,24 +2,26 @@ from rest_framework import status
 from rest_framework.decorators import api_view, parser_classes
 from rest_framework.response import Response
 from rest_framework.parsers import MultiPartParser, FormParser
+from rest_framework.generics import ListAPIView
 
 from .models import Movie
 from.serializers import MovieSerializer
 
 @api_view(['GET'])
-def fetch_movies(request):
+def fetch_movie(request):
     pk = request.GET.get("pk")
     if pk:
         try:
             movie = Movie.objects.get(pk=pk)
         except Movie.DoesNotExist:
-            return Response({"error": "Movie not found"}, status=404)
+            return Response({"error": "Movie not found"}, status=status.HTTP_404_NOT_FOUND)
         serializer = MovieSerializer(movie)
         return Response(serializer.data)
-    else:
-        movies = Movie.objects.all().order_by('pk')
-        serializer = MovieSerializer(movies, many=True)
-        return Response(serializer.data)
+
+
+class fetch_movie_list(ListAPIView):
+    queryset = Movie.objects.all().order_by('pk')
+    serializer_class = MovieSerializer
 
 
 @api_view(['POST'])

@@ -30,6 +30,18 @@
                 </div>
             </li>
         </div>
+        <div class="pagination">
+            <button @click="prev" :disabled="currentPage === 1">◀</button>
+            <button
+                v-for="page in maxPages"
+                :key="page"
+                :class="{ active: page === currentPage }"
+                @click="goToPage(page)"
+                >
+                {{ page }}
+            </button>
+            <button @click="next" :disabled="currentPage === count">▶</button>
+        </div>
     </ul>
 </template>
 
@@ -46,11 +58,40 @@ export default {
     },
 
     props: {
-        movies: Array,
+        movies: {
+            type: Array,
+            required: true
+        },
+
+        count: {
+            type: Number,
+            required: true
+        }
+    },
+
+    emits: ['refetch-movies'],
+
+    data() {
+        return {
+            currentPage: 1,
+            itemsPerPage: 10,
+        }
+    },
+
+    computed: {
+        paginatedMovies() {
+            const start = (this.currentPage - 1) * this.itemsPerPage;
+            const end = start + this.itemsPerPage;
+            return this.movies.slice(start, end);
+        },
+
+        maxPages() {
+            return Math.ceil(this.count / 10);
+        }
     },
 
     methods: {
-        ...mapActions(useMovieStore, ['deleteMovie']),
+        ...mapActions(useMovieStore, ['deleteMovie', 'fetchMovies']),
 
         deleteSelectedMovie(pk) {
             const response = this.deleteMovie(pk);
@@ -72,7 +113,26 @@ export default {
                     status: 'update'
                 }
             });
-        }
+        },
+
+        next() {
+            if (this.currentPage < this.maxPages) {
+                this.currentPage++;
+                this.$emit('refetch-movies', this.currentPage)
+            }
+        },
+
+        prev() {
+            if (this.currentPage > 1) {
+                this.currentPage--;
+                this.$emit('refetch-movies', this.currentPage)
+            }
+        },
+
+        goToPage(page) {
+            this.currentPage = page;
+            this.$emit('refetch-movies', this.currentPage)
+        },
     }
 };
 </script>
@@ -111,5 +171,11 @@ export default {
 .movie-list li {
     padding: 10px;
     border-bottom: 1px solid #ccc;
+}
+
+.pagination {
+    display: flex;
+    margin-top: 20px;
+    justify-content: center;
 }
 </style>
