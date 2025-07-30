@@ -1,5 +1,5 @@
 <template>
-    <button :class="btnClass" @click="$emit('click')">
+    <button :class="btnClass" :disabled="disabled" @click="$emit('click')" type="submit">
         <slot>{{ label }}</slot>
     </button>
 </template>
@@ -13,9 +13,15 @@ export default {
             default: "primary",
             required: false,
         },
+
         label: {
             type: String,
             required: false,
+        },
+
+        disabled: {
+            type: Boolean,
+            default: false
         }
     },
     computed: {

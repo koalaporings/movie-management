@@ -4,7 +4,7 @@
             <h2> {{ isCreate ? 'Upload a Movie' : 'Update Movie' }}</h2>
         </div>
         <div class="form">
-            <form @submit.prevent="submitForm" enctype="multipart/form-data">
+            <form @submit.prevent="uploadMovie" enctype="multipart/form-data">
                 <div class="form-input">
                     <label for="title">Title</label>
                     <br/>
@@ -20,16 +20,20 @@
                     <textarea id="description" v-model="form.description"></textarea>
                 </div>
                 <div class="form-input">
+                    <label for="video">Thumbnail</label>
+                    <br/>
+                    <input type="file" id="thumbnail" @change="handleImageFile" accept=".jpg, .jpeg, .png" required />
+                </div>
+                <div class="form-input">
                     <label for="video">Video File</label>
                     <br/>
-                    <input type="file" id="video" @change="handleFile" accept="video/*, .mkv" required />
+                    <input type="file" id="video" @change="handleFile" accept=".mp4, .ogv, .webm" required />
                 </div>
+                <BaseButton
+                    class="form-submit"
+                    label="Submit"
+                />
             </form>
-            <BaseButton
-                class="form-submit"
-                label="Submit"
-                @click="uploadMovie"
-            />
         </div>
     </div>
 </template>
@@ -50,8 +54,10 @@ export default {
             form: {
                 title: '',
                 description: '',
-                video: null
-            }
+                video: null,
+                thumbnail: null
+            },
+            isSubmitting: false
         }
     },
 
@@ -66,7 +72,11 @@ export default {
 
         moviePk() {
             return this.$route.query?.pk;
-        }
+        },
+
+        hasFormErrors() {
+            return this.isCreate && (!this.form.title || !this.form.description || !this.form.video || !this.form.thumbnail);
+        },
     },
 
     async mounted() {
@@ -80,13 +90,17 @@ export default {
     methods: {
         ...mapActions(useMovieStore, ['createMovie', 'updateMovie', 'getMovie']),
 
+        handleImageFile(event) {
+            this.form.thumbnail = event.target.files[0];
+        },
+
         handleFile(event) {
             this.form.video = event.target.files[0];
         },
 
         validateData() {
             if (this.isCreate) {
-                if (!this.form.title || !this.form.description || !this.form.video) {
+                if (this.hasFormErrors) {
                     return false;
                 }
             }
@@ -95,6 +109,7 @@ export default {
         },
 
         async uploadMovie(){
+            this.isSubmitting = true;
             const valid = this.validateData();
             if (!valid) return;
 
@@ -102,9 +117,11 @@ export default {
             if (this.form.title) formData.append('title', this.form.title);
             if (this.form.description) formData.append('description', this.form.description);
             if (this.form.video) formData.append('video_file', this.form.video);
+            if (this.form.thumbnail) formData.append('thumbnail', this.form.thumbnail)
 
             if (this.isCreate) await this.createMovie(formData)
             else await this.updateMovie(this.moviePk, formData)
+            this.isSubmitting = false;
         }
     }
 }

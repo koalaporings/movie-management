@@ -3,7 +3,7 @@
         <span>{{ movies[currentIndex].title }}</span>
         <div class="carousel-controls">
             <button @click="prev">◀</button>
-            <img :src="movies[currentIndex].poster" :alt="movies[currentIndex].title" />
+            <img :src="getImageUrl(movies[currentIndex].thumbnail)" :alt="movies[currentIndex].title" />
 
             <button @click="next">▶</button>
         </div>
@@ -19,6 +19,7 @@ export default {
     data() {
         return {
             currentIndex: 0,
+            baseURL: "http://localhost:8000"
         };
     },
     methods: {
@@ -28,6 +29,10 @@ export default {
         prev() {
             this.currentIndex = (this.currentIndex - 1 + this.movies.length) % this.movies.length;
         },
+
+        getImageUrl(path) {
+            return `${this.baseURL}${path}`
+        }
     },
 };
 </script>
