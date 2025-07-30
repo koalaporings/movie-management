@@ -1,18 +1,26 @@
 <template>
     <LoadingSpinner v-if="isLoading"/>
-    <div v-else class="group">
-        <div class="movie-carousel">
-            <MovieCarousel v-if="movies" :movies="movies" />
+    <template v-else>
+        <div v-if="movies.length" class="group">
+            <div class="movie-carousel">
+                <MovieCarousel :movies="movies" />
+            </div>
+            <div class="movie-list">
+                <MovieList
+                    :movies="movies"
+                    :count="count"
+                    @refetch-movies="refetchMovies"
+                />
+            </div>
         </div>
-        <div class="movie-list">
-            <MovieList
-                v-if="movies"
-                :movies="movies"
-                :count="count"
-                @refetch-movies="refetchMovies"
-            />
-        </div>
-    </div>
+        <EmptyState
+            v-else
+            title="No movies to show"
+            message="Upload movies to show the list of movies."
+            button-text="Upload here"
+            @action="goToUpload"
+        />
+    </template>
 </template>
 
 <script>
@@ -21,13 +29,15 @@ import { useMovieStore } from '@/stores/movies';
 import MovieCarousel from "@/components/MovieCarousel.vue";
 import MovieList from "@/components/MovieList.vue";
 import LoadingSpinner from '@/components/generics/LoadingSpinner.vue';
+import EmptyState from '@/components/generics/EmptyState.vue';
 
 export default {
     name: "HomePage",
     components: {
         MovieCarousel,
         MovieList,
-        LoadingSpinner
+        LoadingSpinner,
+        EmptyState
     },
 
     data() {
@@ -57,6 +67,15 @@ export default {
             const response = await this.fetchMovies(this.itemsPerPage, this.itemsPerPage*(currentPage-1))
             this.movies = response.results;
             this.count = response.count;
+        },
+
+        goToUpload() {
+            this.$router.push({
+                name: 'upload',
+                query: {
+                    status: 'create'
+                }
+            });
         }
     },
 
