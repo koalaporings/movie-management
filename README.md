@@ -105,4 +105,28 @@ python manage.py runserver
 
 #### File Upload
     1. Login using a registered user.
-    2. 
+    2. Click the Upload button in the navigation header.
+    3. Fill up the input fields.
+    4. Upload your thumbnail/poster.
+    5. Upload your video file.
+    6. Press Submit.
+    7. Wait for success modal to appear.
+    8. Close the success modal and check if movie appears in the movie list.
+
+#### Movie Update
+    1. Login using a registered user.
+    2. Click the Update button beside a movie.
+    3. Fill up the input fields needed to be updated
+    4. Upload your thumbnail/poster.
+    5. Upload your video file.
+    6. Press Submit.
+    7. Wait for success modal to appear.
+    8. Close the success modal.
+    9. Look for the movie in the movie list.
+    10. Click the View button beside the update movie.
+    11. Check the right-side of the page for the details of the movie.
+
+#### Video Playback
+    1. Login using a registered user.
+    2. Click the View button beside a movie.
+    3. Play the video at the right-side of the page.
