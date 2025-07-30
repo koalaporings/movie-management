@@ -1,5 +1,5 @@
 <template>
-    <ul class="movie-list">
+    <div class="movie-list">
         <div class="movie-list-header">
             <h2> Movie Catalouge </h2>
         </div>
@@ -24,7 +24,7 @@
                         <BaseButton
                             label="Delete"
                             type="danger"
-                            @click="true"
+                            @click="deleteSelectedMovie(movie.id)"
                         />
                     </div>
                 </div>
@@ -42,7 +42,7 @@
             </button>
             <button @click="next" :disabled="currentPage === count">▶</button>
         </div>
-    </ul>
+    </div>
 </template>
 
 <script>
@@ -94,8 +94,8 @@ export default {
         ...mapActions(useMovieStore, ['deleteMovie', 'fetchMovies']),
 
         deleteSelectedMovie(pk) {
-            const response = this.deleteMovie(pk);
-            console.log(response)
+            this.deleteMovie(pk);
+            this.$emit('refetch-movies', this.currentPage)
         },
 
         goToView(pk) {

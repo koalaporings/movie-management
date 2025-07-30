@@ -1,8 +1,9 @@
 <template>
     <div class="button-group">
         <img
-            width="50px"
-            height="50px"
+            src="../assets/logo.png"
+            width="100px"
+            height="60px"
         >
         <BaseButton
             type="secondary"
@@ -44,7 +45,7 @@ export default {
         display: flex;
 
         img {
-            margin-right: 4px;
+            margin-right: 20px;
         }
 
     }

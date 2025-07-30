@@ -32,21 +32,36 @@
                 <BaseButton
                     class="form-submit"
                     label="Submit"
+                    :status="'submit'"
+                    :submitting="isSubmitting"
+                    :disabled="isSubmitting"
                 />
             </form>
         </div>
     </div>
+    <BaseModal
+        v-if="isSubmitted"
+        :message="successMessage"
+        @close="$router.push('/home')"
+    />
+    <BaseModal
+        v-if="errorMessage"
+        :message="errorMessage"
+        @close="resetErrorMessage"
+    />
 </template>
 <script>
 import { mapActions } from 'pinia';
 import { useMovieStore } from '@/stores/movies';
 import BaseButton from '@/components/generics/BaseButton.vue';
+import BaseModal from '@/components/generics/BaseModal.vue';
 
 export default {
     name: "UploadPage",
 
     components: {
-        BaseButton
+        BaseButton,
+        BaseModal
     },
 
     data() {
@@ -57,7 +72,9 @@ export default {
                 video: null,
                 thumbnail: null
             },
-            isSubmitting: false
+            isSubmitting: false,
+            isSubmitted: false,
+            errorMessage: ''
         }
     },
 
@@ -77,6 +94,10 @@ export default {
         hasFormErrors() {
             return this.isCreate && (!this.form.title || !this.form.description || !this.form.video || !this.form.thumbnail);
         },
+
+        successMessage() {
+            return this.isCreate ? "You have successfully uploaded a movie!" : "You have successfully updated a movie!";
+        }
     },
 
     async mounted() {
@@ -98,9 +119,15 @@ export default {
             this.form.video = event.target.files[0];
         },
 
+        resetErrorMessage() {
+            this.errorMessage = '';
+            this.isSubmitting = false;
+        },
+
         validateData() {
             if (this.isCreate) {
                 if (this.hasFormErrors) {
+                    this.errorMessage = 'Kindly fill up all the fields.'
                     return false;
                 }
             }
@@ -119,9 +146,15 @@ export default {
             if (this.form.video) formData.append('video_file', this.form.video);
             if (this.form.thumbnail) formData.append('thumbnail', this.form.thumbnail)
 
-            if (this.isCreate) await this.createMovie(formData)
-            else await this.updateMovie(this.moviePk, formData)
-            this.isSubmitting = false;
+            try {
+                if (this.isCreate) await this.createMovie(formData)
+                else await this.updateMovie(this.moviePk, formData)
+
+                this.isSubmitting = false;
+                this.isSubmitted = true;
+            } catch {
+                this.errorMessage = 'Something went wrong, try again.'
+            }
         }
     }
 }

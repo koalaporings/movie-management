@@ -35,7 +35,6 @@ export const useMovieStore = defineStore('movie', {
 
 		async deleteMovie(pk) {
 			const response = await axios.delete('delete-movie/', { params: { pk } });
-			await this.fetchMovies();
 			return response.data;
 		}
 	}
