@@ -1,35 +1,69 @@
-# vue-frontend
+# Movie Management System App
 
-This template should help get you started developing with Vue 3 in Vite.
+This is a full-stack movie application built with Vue.js (frontend) and Django (backend), using PostgreSQL as the database.
 
-## Recommended IDE Setup
 
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur).
 
-## Customize configuration
+## Prerequisites
 
-See [Vite Configuration Reference](https://vite.dev/config/).
+- Git
+- Node.js and npm
+- Python 3.8 or above
+- PostgreSQL
 
-## Project Setup
+## Project Structure
 
-```sh
+project-root/
+├── media # movie and thumbnail directory
+├── vue-frontend/ # Vue.js frontend application
+└── django-backend/ # Django backend application
+
+## Setup Instructions
+#### 1. Clone the repository
+```
+git clone https://github.com/koalaporings/your-repo-name
+cd your-repo-name
+```
+### 2. Frontend Setup
+
+```
+cd vue-frontend
 npm install
 ```
-
-### Compile and Hot-Reload for Development
-
-```sh
-npm run dev
+### 3. Backend Setup
+```
+cd ../django-backend
+pip install -r requirements.txt
 ```
 
-### Compile and Minify for Production
+### 4. Install PostgreSQL
 
-```sh
-npm run build
+Download and install PostgreSQL from the official site:
+https://www.postgresql.org/download/
+
+### 5. Configure Database
+
+1.  During PostgreSQL installation, create a user and set a password.
+
+2.  Open `django-backend/mysite/settings.py`.
+
+3.  Update the `DATABASES` section with your PostgreSQL username, password, and database name.
+
+### 6. Apply Migrations
+```
+python manage.py migrate
+```
+### 7. Run the Application
+
+#### Frontend
+```
+`cd ../vue-frontend
+npm run serve`
 ```
 
-### Lint with [ESLint](https://eslint.org/)
+#### Backend
 
-```sh
-npm run lint
+```
+cd ../django-backend
+python manage.py runserver
 ```
