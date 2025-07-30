@@ -67,3 +67,15 @@ npm run serve`
 cd ../django-backend
 python manage.py runserver
 ```
+
+## Known Bugs and Issues
+
+1. When updating a movie, the `thumbnail` and `video file` upload fields are not filled up immediately, causing the user to reupload the files used.
+
+2. When viewing a movie, then going back to the home page and try to delete said movie, it will result in an error.
+
+## Suggested Improvements
+
+1. Implement a celery task to convert any movie/video file into the .mp4 format after creating/uploading. The uploaded movie will not be seen in the movie list until the conversion is completed, to ensure better playback and audio.
+
+2. Implement thumbnail generation for the video player to preview a scene in the selected movie.
