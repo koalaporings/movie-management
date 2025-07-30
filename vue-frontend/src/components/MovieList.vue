@@ -10,14 +10,16 @@
                         <div class="movie-title">
                             {{ movie.title }}
                         </div>
-                        <div class="movie-description">
-                            {{ movie.description }}
-                        </div>
                     </div>
                     <div class="movie-actions">
                         <BaseButton
                             label="View"
-                            @click="goToRoute(movie.id)"
+                            @click="goToView(movie.id)"
+                        />
+                        <BaseButton
+                            label="Update"
+                            type="secondary"
+                            @click="goToUpdate(movie.id)"
                         />
                         <BaseButton
                             label="Delete"
@@ -55,12 +57,22 @@ export default {
             console.log(response)
         },
 
-        goToRoute(pk) {
+        goToView(pk) {
             this.$router.push({
                 name: 'watch',
                 query: { pk: pk }
             });
-}
+        },
+
+        goToUpdate(pk) {
+            this.$router.push({
+                name: 'upload',
+                query: {
+                    pk: pk,
+                    status: 'update'
+                }
+            });
+        }
     }
 };
 </script>
@@ -90,9 +102,8 @@ export default {
     flex-direction: row;
     justify-content: space-between;
 
-    .movie-data {
-        display: flex;
-        flex-direction: column;
+    .movie-title {
+        font-size: 24px;
     }
 }
 

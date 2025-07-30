@@ -1,7 +1,7 @@
 <template>
     <div class="upload">
         <div class="upload-header">
-            <h2> Upload a Movie</h2>
+            <h2> {{ isCreate ? 'Upload a Movie' : 'Update Movie' }}</h2>
         </div>
         <div class="form">
             <form @submit.prevent="submitForm" enctype="multipart/form-data">
@@ -55,20 +55,56 @@ export default {
         }
     },
 
+    computed: {
+        isCreate() {
+            return this.$route.query.status === 'create';
+        },
+
+        isUpdate() {
+            return this.$route.query.status === 'update';
+        },
+
+        moviePk() {
+            return this.$route.query?.pk;
+        }
+    },
+
+    async mounted() {
+        if (this.isUpdate){
+            const response = await this.getMovie(this.moviePk);
+            this.form.title = response.title;
+            this.form.description = response.description;
+        }
+    },
+
     methods: {
-        ...mapActions(useMovieStore, ['createMovie']),
+        ...mapActions(useMovieStore, ['createMovie', 'updateMovie', 'getMovie']),
 
         handleFile(event) {
             this.form.video = event.target.files[0];
         },
 
-        async uploadMovie(){
-            const formData = new FormData();
-            formData.append('title', this.form.title);
-            formData.append('description', this.form.description);
-            formData.append('video_file', this.form.video);
+        validateData() {
+            if (this.isCreate) {
+                if (!this.form.title || !this.form.description || !this.form.video) {
+                    return false;
+                }
+            }
 
-            await this.createMovie(formData)
+            return true;
+        },
+
+        async uploadMovie(){
+            const valid = this.validateData();
+            if (!valid) return;
+
+            const formData = new FormData();
+            if (this.form.title) formData.append('title', this.form.title);
+            if (this.form.description) formData.append('description', this.form.description);
+            if (this.form.video) formData.append('video_file', this.form.video);
+
+            if (this.isCreate) await this.createMovie(formData)
+            else await this.updateMovie(this.moviePk, formData)
         }
     }
 }

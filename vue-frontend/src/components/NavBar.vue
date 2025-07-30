@@ -11,13 +11,8 @@
         />
         <BaseButton
             type="secondary"
-            label="List"
-            @click="$router.push('/upload')"
-        />
-        <BaseButton
-            type="secondary"
-            label="About"
-            @click="$router.push('/watch')"
+            label="Upload"
+            @click="goToUpload"
         />
     </div>
 </template>
@@ -28,6 +23,17 @@ import BaseButton from './generics/BaseButton.vue';
 export default {
     components: {
         BaseButton
+    },
+
+    methods: {
+        goToUpload() {
+            this.$router.push({
+                name: 'upload',
+                query: {
+                    status: 'create'
+                }
+            });
+        }
     }
 };
 </script>
