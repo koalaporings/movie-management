@@ -1,14 +1,6 @@
-<script>
-import NavBar from './components/NavBar.vue';
-export default {
-    components: {
-        NavBar
-    }
-};
-</script>
 <template>
     <div id="app">
-        <div class="header">
+        <div v-if="isNotLogin" class="header">
             <NavBar/>
         </div>
         <div class="body">
@@ -16,6 +8,20 @@ export default {
         </div>
     </div>
 </template>
+<script>
+import NavBar from './components/NavBar.vue';
+export default {
+    components: {
+        NavBar
+    },
+
+    computed: {
+        isNotLogin() {
+            return this.$route.name !== 'login' && this.$route.name !== 'register';
+        }
+    },
+};
+</script>
 <style>
     .header {
         position: fixed;

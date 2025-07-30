@@ -3,11 +3,31 @@ from rest_framework.decorators import api_view, parser_classes
 from rest_framework.response import Response
 from rest_framework.parsers import MultiPartParser, FormParser
 from rest_framework.generics import ListAPIView
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.decorators import permission_classes
+
+from django.contrib.auth.models import User
+from django.contrib.auth.hashers import make_password
 
 from .models import Movie
 from.serializers import MovieSerializer
 
+@api_view(['POST'])
+def register_user(request):
+    username = request.data.get('username')
+    password = request.data.get('password')
+
+    if User.objects.filter(username=username).exists():
+        return Response({'error': 'Username already taken'}, status=status.HTTP_400_BAD_REQUEST)
+
+    user = User.objects.create(
+        username=username,
+        password=make_password(password)  # hash the password
+    )
+    return Response({'message': 'User created successfully'}, status=status.HTTP_201_CREATED)
+
 @api_view(['GET'])
+@permission_classes([IsAuthenticated])
 def fetch_movie(request):
     pk = request.GET.get("pk")
     if pk:
@@ -22,10 +42,12 @@ def fetch_movie(request):
 class fetch_movie_list(ListAPIView):
     queryset = Movie.objects.all().order_by('pk')
     serializer_class = MovieSerializer
+    permission_classes = [IsAuthenticated]
 
 
 @api_view(['POST'])
 @parser_classes([MultiPartParser, FormParser])
+@permission_classes([IsAuthenticated])
 def create_movie(request):
     serializer = MovieSerializer(data=request.data)
     if serializer.is_valid():
@@ -36,6 +58,7 @@ def create_movie(request):
 
 @api_view(['PUT'])
 @parser_classes([MultiPartParser, FormParser])
+@permission_classes([IsAuthenticated])
 def update_movie(request):
     pk = request.GET.get("pk")
     if not pk:
@@ -54,6 +77,7 @@ def update_movie(request):
 
 
 @api_view(['DELETE'])
+@permission_classes([IsAuthenticated])
 def delete_movie(request):
     pk = request.GET.get("pk")
     if not pk:

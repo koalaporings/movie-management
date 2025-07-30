@@ -1,26 +1,26 @@
 import { defineStore } from 'pinia';
-import axios from 'axios';
+import api from '@/auth/api';
 
-export const useMovieStore = defineStore('movie', {
+export const useMovieStore = defineStore('/movies/movie', {
 	actions: {
 		async fetchMovies(limit=10, offset=0) {
             if (offset > 0){
-                const response = await axios.get('movie-list/', {params: {limit: limit, offset: offset}});
+                const response = await api.get('/movies/movie-list/', {params: {limit: limit, offset: offset}});
 			    return response.data;
             } else {
-                const response = await axios.get('movie-list/');
+                const response = await api.get('/movies/movie-list/');
 			    return response.data;
             }
 
 		},
 
 		async getMovie(pk) {
-			const response = await axios.get('get-movie/', { params: { pk } });
+			const response = await api.get('/movies/get-movie/', { params: { pk } });
 			return response.data;
 		},
 
 		async createMovie(formData) {
-			const response = await axios.post('create-movie/', formData, {
+			const response = await api.post('/movies/create-movie/', formData, {
 				headers: { 'Content-Type': 'multipart/form-data' },
 			});
 			await this.fetchMovies();
@@ -28,13 +28,13 @@ export const useMovieStore = defineStore('movie', {
 		},
 
 		async updateMovie(pk, formData) {
-			const response = await axios.put('update-movie/', formData, { params: { pk } });
+			const response = await api.put('/movies/update-movie/', formData, { params: { pk } });
 			await this.fetchMovies();
 			return response.data;
 		},
 
 		async deleteMovie(pk) {
-			const response = await axios.delete('delete-movie/', { params: { pk } });
+			const response = await api.delete('/movies/delete-movie/', { params: { pk } });
 			return response.data;
 		}
 	}
