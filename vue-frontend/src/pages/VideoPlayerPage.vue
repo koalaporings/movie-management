@@ -59,57 +59,57 @@ export default {
 </script>
 
 <style scoped>
-.video-player {
-    display: flex;
-    margin-top: 20px;
-}
-
-.video-container {
-    min-width: 900px;
-    height: 500px;
-    display: flex;
-    justify-content: center;
-}
-
-.video-data {
-    width: auto;
-    margin-left: 20px;
-    margin-top: 50px;
-
-    .video-title {
+    .video-player {
         display: flex;
-        flex-direction: row;
-        font-size: 24px;
+        margin-top: 20px;
+    }
 
-        h1 {
-            margin-left: 20px;
+    .video-container {
+        min-width: 900px;
+        height: 500px;
+        display: flex;
+        justify-content: center;
+    }
+
+    .video-data {
+        width: auto;
+        margin-left: 20px;
+        margin-top: 50px;
+
+        .video-title {
             display: flex;
-            align-items: center;
-            justify-content: center;
+            flex-direction: row;
+            font-size: 24px;
+
+            h1 {
+                margin-left: 20px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+        }
+
+        .video-description {
+            font-size: 16px;
+            margin-right: 20px;
+            text-align: justify;
+
+            h3 {
+                font-size: 20px;
+            }
+        }
+
+        .video-date {
+            font-size: 16px;
+
+            h3 {
+                font-size: 20px;
+            }
         }
     }
 
-    .video-description {
-        font-size: 16px;
-        margin-right: 20px;
-        text-align: justify;
-
-        h3 {
-            font-size: 20px;
-        }
+    .video-data > div {
+        padding: 10px;
     }
-
-    .video-date {
-        font-size: 16px;
-
-        h3 {
-            font-size: 20px;
-        }
-    }
-}
-
-.video-data > div {
-    padding: 10px;
-}
 
 </style>

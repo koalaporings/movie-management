@@ -44,25 +44,25 @@ export default {
 </script>
 
 <style scoped>
-.carousel {
-    text-align: center;
-    margin: 20px auto;
+    .carousel {
+        text-align: center;
+        margin: 20px auto;
 
-    span {
-        font-size: 32px;
-        font-weight: 900;
+        span {
+            font-size: 32px;
+            font-weight: 900;
+        }
     }
-}
-.carousel img {
-    width: 400px;
-    height: 600px;
-}
-.carousel-controls {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 15px;
-    margin-top: 10px;
-    color: white
-}
+    .carousel img {
+        width: 400px;
+        height: 600px;
+    }
+    .carousel-controls {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 15px;
+        margin-top: 10px;
+        color: white
+    }
 </style>
