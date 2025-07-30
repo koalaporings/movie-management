@@ -1,5 +1,6 @@
 <template>
-    <div class="group">
+    <LoadingSpinner v-if="isLoading"/>
+    <div v-else class="group">
         <div class="movie-carousel">
             <MovieCarousel :movies="featuredMovies" />
         </div>
@@ -14,13 +15,16 @@ import { mapState, mapActions } from 'pinia';
 import { useMovieStore } from '@/stores/movies';
 import MovieCarousel from "@/components/MovieCarousel.vue";
 import MovieList from "@/components/MovieList.vue";
+import LoadingSpinner from '@/components/generics/LoadingSpinner.vue';
 
 export default {
     name: "HomePage",
     components: {
         MovieCarousel,
         MovieList,
+        LoadingSpinner
     },
+
     data() {
         return {
         featuredMovies: [
@@ -33,6 +37,7 @@ export default {
             { id: 5, title: "Dune" },
             { id: 6, title: "Avengers: Endgame" },
         ],
+        isLoading: true
         };
     },
 
@@ -40,8 +45,9 @@ export default {
         ...mapState(useMovieStore, ['movies'])
     },
 
-    mounted() {
-        this.fetchMovies()
+    async mounted() {
+        await this.fetchMovies()
+        this.isLoading = false;
     },
 
     methods: {
@@ -70,5 +76,11 @@ export default {
         height: auto;
         width: 100%;
         box-sizing: border-box;
+    }
+
+    LoadingSpinner {
+        height: 100%;
+        width: 100%;
+        align-items: center;
     }
 </style>
